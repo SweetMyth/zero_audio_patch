@@ -1,6 +1,7 @@
 # Zero Audio Patch
 
 Audio mod for ZUK Z2 Plus
+
 The purpose of this mod is to achieve best sound quality for headphones without any extra processing
 
 ## Requires
@@ -12,7 +13,7 @@ The purpose of this mod is to achieve best sound quality for headphones without 
 
 ## Features
 
-Mixer -
+Mixer Path -
 * [SLIMBUS_6](https://en.wikipedia.org/wiki/SLIMbus) for headphones
 * [Amp CLASS_H_HIFI](https://en.wikipedia.org/wiki/Power_amplifier_classes) for headphones
 * [Disabled Companders](https://en.wikipedia.org/wiki/Companding)
@@ -40,4 +41,5 @@ I got a bug
 ## Links
 
 [XDA](https://forum.xda-developers.com/lenovo-zuk-z2/themes/magisk-v17-x-zero-audio-patch-t3843893) - XDA Theme
+
 [Download](https://github.com/xvlad113x/zero_audio_patch/release) - Download latest version
