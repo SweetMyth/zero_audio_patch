@@ -63,7 +63,7 @@ $BOOTMODE && boot_actions || recovery_actions
 ##########################################################################################
 
 # Extract common files
-unzip -o "$ZIP" module.prop system.prop -d $INSTALLER >&2
+unzip -o "$ZIP" module.prop system.prop post-fs-data.sh -d $INSTALLER >&2
 
 # Check the installed magisk version
 MIN_VER=17000
@@ -71,11 +71,12 @@ MIN_VER=17000
 
 MODID=zap
 MODPATH=$MOUNTPATH/$MODID
+MODVER=`grep_prop version $INSTALLER/module.prop`
 
 # Mod name
 ui_print "*******************************"
-ui_print "     Zero Audio Patch 1.22     "
-ui_print "        Device: ZUK Z2         "
+ui_print "   Zero Audio Patch $MODVER    "
+ui_print "  Device: ZUK Z2 Plus / Pro    "
 ui_print "*******************************"
 ui_print "Powered by Magisk (@topjohnwu) "
 ui_print "*******************************"
@@ -132,7 +133,6 @@ $POSTFSDATA && cp -af $INSTALLER/post-fs-data.sh $MODPATH/post-fs-data.sh
 $LATESTARTSERVICE && cp -af $INSTALLER/service.sh $MODPATH/service.sh
 
 ui_print "- Setting permissions"
-#set_perm_recursive  $MODPATH  0  0  0755  0644
 
 ##########################################################################################
 # Finalizing
