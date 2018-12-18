@@ -180,7 +180,7 @@
 
 	<path name="low-latency-playback smartpa">
 		<ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia5" value="1"/>
-		<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia1" value="1"/>
+		<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia5" value="1"/>
 	</path>
 
 	<path name="low-latency-playback usb-headphones">
@@ -222,8 +222,8 @@
 	</path>
 
 	<path name="compress-offload-playback smartpa">
-		<ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia7" value="1"/>
-		<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia1" value="1"/>
+		<ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia4" value="1"/>
+		<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia4" value="1"/>
 	</path>
 
 	<path name="compress-offload-playback usb-headphones">
@@ -266,7 +266,7 @@
 
 	<path name="compress-offload-playback2 smartpa">
 		<ctl name="QUAT_MI2S_RX Audio Mixer MultiMedia7" value="1"/>
-		<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia1" value="1"/>
+		<ctl name="SLIMBUS_0_RX Audio Mixer MultiMedia7" value="1"/>
 	</path>
 
 	<path name="compress-offload-playback2 usb-headphones">
@@ -960,7 +960,7 @@
 		<ctl name="SLIM_0_RX Channels" value="Two"/>
 		<ctl name="SpkrLeft WSA PA Gain" value="G_18_DB"/>
 		<ctl name="SpkrLeft WSA PA Mute" value="0"/>
-		<ctl name="SpkrLeft COMP Switch" value="1"/>
+		<ctl name="SpkrLeft COMP Switch" value="0"/>
 		<ctl name="SpkrLeft BOOST Switch" value="1"/>
 		<ctl name="SpkrLeft VISENSE Switch" value="1"/>
 		<ctl name="SpkrLeft SWR DAC_Port Switch" value="1"/>
