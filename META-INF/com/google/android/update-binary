@@ -1,148 +1,113 @@
 #!/sbin/sh
-TMPDIR=/dev/tmp
-INSTALLER=$TMPDIR/install
-# Always mount under tmp
-MOUNTPATH=$TMPDIR/magisk_img
-
-# Default permissions
-umask 022
-
-# Initial cleanup
-rm -rf $TMPDIR 2>/dev/null
-mkdir -p $INSTALLER
-
-# echo before loading util_functions
-ui_print() { echo "$1"; }
-
-require_new_magisk() {
-  ui_print "*******************************"
-  ui_print " Please install Magisk v17.0+! "
-  ui_print "*******************************"
-  exit 1
-}
-
-##########################################################################################
-# Environment
-##########################################################################################
-
+# Zero Magisk Module by vlad113
+# Powered by Magisk (@topjohnwu)
+Pref="[Magisk Module]"
+TEMP=/dev/tmp
+INSTALL=$TEMP/install
+MOUNTPATH=$TEMP/magisk_img
 OUTFD=$2
 ZIP=$3
 
-mount /data 2>/dev/null
+# Permissions 644
+umask 022
 
-# Load utility functions
-if [ -f /data/adb/magisk/util_functions.sh ]; then
-  . /data/adb/magisk/util_functions.sh
-elif [ -f /data/magisk/util_functions.sh ]; then
-  NVBASE=/data
-  . /data/magisk/util_functions.sh
+# Cleanup temp folder
+rm -rf $TEMP 2>/dev/null
+mkdir -p $INSTALL
+
+# Magisk API
+ui_print() { echo "$1"; }
+
+mount /data 2>/dev/null
+util=magisk/util_functions.sh
+if [ -f /data/adb/$util ]; then
+	. /data/adb/$util
+elif [ -f /data/$util ]; then
+	NVBASE=/data
+	. /data/$util
 else
-  require_new_magisk
+	ui_print "$Pref - Install/Update Magisk!"
+	exit 1
 fi
 
-# Use alternative image if in BOOTMODE
+# if device booted using another img
 $BOOTMODE && IMG=$NVBASE/magisk_merge.img
 
-# Preperation for flashable zips
 setup_flashable
-
-# Mount partitions
 mount_partitions
-
-# Detect version and architecture
 api_level_arch_detect
 
-# You can get the Android API version from $API, the CPU architecture from $ARCH
-# Useful if you are creating Android version / platform dependent mods
-
-# Setup busybox and binaries
+# busybox initializing
 $BOOTMODE && boot_actions || recovery_actions
 
-##########################################################################################
-# Preparation
-##########################################################################################
-
-# Extract common files
-unzip -o "$ZIP" module.prop system.prop post-fs-data.sh -d $INSTALLER >&2
-
-# Check the installed magisk version
-MIN_VER=17000
-[ ! -z $MAGISK_VER_CODE -a $MAGISK_VER_CODE -ge $MIN_VER ] || require_new_magisk
-
-MODID=zap
-MODPATH=$MOUNTPATH/$MODID
-MODVER=`grep_prop version $INSTALLER/module.prop`
-
-# Mod name
-ui_print "*******************************"
-ui_print "   Zero Audio Patch $MODVER    "
-ui_print "  Device: ZUK Z2 Plus / Pro    "
-ui_print "*******************************"
-ui_print "Powered by Magisk (@topjohnwu) "
-ui_print "*******************************"
-
-##########################################################################################
 # Install
-##########################################################################################
+unzip -o "$ZIP" module.prop module.sh -d $INSTALL >&2
 
-# Get the variable reqSizeM. Use your own method to determine reqSizeM if needed
+. $INSTALL/module.sh
+MODID=`grep_prop id $INSTALL/module.prop`
+MODNAME=`grep_prop name $INSTALL/module.prop`
+MODVER=`grep_prop version $INSTALL/module.prop`
+MODAUTH=`grep_prop author $INSTALL/module.prop`
+MODPATH=$MOUNTPATH/$MODID
+
+# Remove module if already installed
+# !Not work in TWRP
+if [ -d /sbin/.core/img/$MODID ]; then
+	ui_print "$Pref - $MODNAME is already installed"
+	ui_print "- Module removing"
+	rm -rf /sbin/.core/img/$MODID 2>/dev/null
+	ui_print "- $MODNAME now is deleted"
+	exit 0
+fi
+
+# Check supported device
+if [ "$device_check" ]; then
+	device="$(getprop ro.product.device)"
+	for i in $device1 $device2 $device3 $device4 $device5 $device6 $device7 $device8 $device9; do
+		if [ "$device" == "$i" ]; then
+			supported=1
+			break
+		fi
+	done
+	if [ ! "$supported" ]; then
+		ui_print "$Pref - $device is not supported!"
+		exit 1
+	fi
+fi
+
+# Module name
+ui_print "$Pref - $MODNAME"
+ui_print "Version - $MODVER"
+ui_print "Author - $MODAUTH"
+ui_print "Powered by Magisk (@topjohnwu)"
+
+# Size check
 request_zip_size_check "$ZIP"
-
-# This function will mount $IMG to $MOUNTPATH, and resize the image based on $reqSizeM
 mount_magisk_img
 
-# Create mod paths
+# Cleanup mod folder
 rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
-# Extract files to system. Use your own method if needed
-ui_print "- Extracting module files"
-unzip -o "$ZIP" 'system/*' -d $MODPATH >&2
+# Extract files
+ui_print "- Extracting files"
+unzip -o "$ZIP" -d $MODPATH >&2
+rm -rf $MODPATH/META-INF
+rm -rf $MODPATH/module.sh
 
-# Remove placeholder
-rm -f $MODPATH/system/placeholder 2>/dev/null
+# Custom module in module.sh
+custom_module
 
-# Handle replace folders
-for TARGET in $REPLACE; do
-  mktouch $MODPATH$TARGET/.replace
-done
+touch $MODPATH/auto_mount
 
-AUTOMOUNT=true
-PROPFILE=true
-POSTFSDATA=true
-LATESTARTSERVICE=true
-
-# Auto Mount
-$AUTOMOUNT && touch $MODPATH/auto_mount
-
-# prop files
-$PROPFILE && cp -af $INSTALLER/system.prop $MODPATH/system.prop
-
-# Module info
-cp -af $INSTALLER/module.prop $MODPATH/module.prop
+# if booted update info in Magisk Manager
 if $BOOTMODE; then
-  # Update info for Magisk Manager
-  mktouch /sbin/.core/img/$MODID/update
-  cp -af $INSTALLER/module.prop /sbin/.core/img/$MODID/module.prop
+	mktouch /sbin/.core/img/$MODID/update
 fi
 
-# post-fs-data mode scripts
-$POSTFSDATA && cp -af $INSTALLER/post-fs-data.sh $MODPATH/post-fs-data.sh
-
-# service mode scripts
-$LATESTARTSERVICE && cp -af $INSTALLER/service.sh $MODPATH/service.sh
-
-ui_print "- Setting permissions"
-
-##########################################################################################
-# Finalizing
-##########################################################################################
-
-# Unmount magisk image and shrink if possible
 unmount_magisk_img
 
+# Cleanup
 $BOOTMODE || recovery_cleanup
-rm -rf $TMPDIR
-
-ui_print "- Done"
+rm -rf $TEMP
 exit 0

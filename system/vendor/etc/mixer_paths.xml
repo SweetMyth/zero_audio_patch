@@ -1111,6 +1111,12 @@
 		<ctl name="RX INT2_1 NATIVE MUX" value="ON"/>
 	</path>
 
+	<path name="hph-highquality-mode">
+	</path>
+
+	<path name="hph-lowpower-mode">
+	</path>
+
 	<path name="line">
 		<path name="headphones"/>
 	</path>
