@@ -450,8 +450,8 @@
 
 	<path name="play-fm smartpa">
 		<ctl name="Internal FM RX Volume" value="1"/>
-		<ctl name="SLIMBUS_6_RX Port Mixer INTERNAL_FM_TX" value="1"/>
-		<ctl name="SLIMBUS6_DL_HL Switch" value="1"/>
+		<ctl name="SLIMBUS_0_RX Port Mixer INTERNAL_FM_TX" value="1"/>
+		<ctl name="SLIMBUS_DL_HL Switch" value="1"/>
 		<ctl name="QUAT_MI2S_RX Audio Mixer INTERNAL_FM_TX" value="1"/>
 	</path>
 
