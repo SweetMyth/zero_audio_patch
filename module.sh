@@ -6,17 +6,25 @@ device3=
 
 custom_module() {
 # Zero Audio Patch
+	policy=$MODPATH/files/audio_policy_configuration.xml
+	mixer=$MODPATH/files/mixer_paths.xml
 	ui_print "- Check audio directory"
 	if [ -f /system/etc/audio_policy_configuration.xml ]; then
-		mv $MODPATH/system/vendor/etc/audio_policy_configuration.xml $MODPATH/system/etc/
+		cp $policy $MODPATH/system/etc/
+	else
+		cp $policy $MODPATH/system/vendor/etc/
 	fi
 	if [ -f /system/etc/mixer_paths.xml ]; then
-		mv $MODPATH/system/vendor/etc/mixer_paths.xml $MODPATH/system/etc/
+		cp $mixer $MODPATH/system/etc/
 	fi
 	if [ -f /system/etc/mixer_paths_tasha.xml ]; then
-		mv $MODPATH/system/vendor/etc/mixer_paths.xml $MODPATH/system/etc/mixer_paths_tasha.xml
+		cp $mixer $MODPATH/system/etc/mixer_paths_tasha.xml
+	fi
+	if [ -f /system/vendor/etc/mixer_paths.xml ]; then
+		cp $mixer $MODPATH/system/vendor/etc/
 	fi
 	if [ -f /system/vendor/etc/mixer_paths_tasha.xml ]; then
-		mv $MODPATH/system/vendor/etc/mixer_paths.xml $MODPATH/system/vendor/etc/mixer_paths_tasha.xml
+		cp $mixer $MODPATH/system/vendor/etc/mixer_paths_tasha.xml
 	fi
+	rm -rf $MODPATH/files
 }
