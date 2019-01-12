@@ -15,7 +15,7 @@ The purpose of this mod is to achieve best sound quality for headphones without 
 
 Mixer Paths -
 * [SLIMBUS_6](https://en.wikipedia.org/wiki/SLIMbus) for headphones
-* [CLASS_H_HIFI](https://en.wikipedia.org/wiki/Power_amplifier_classes) for headphones
+* [CLASS_AB](https://en.wikipedia.org/wiki/Power_amplifier_classes) for headphones
 * Disabled [Companders](https://en.wikipedia.org/wiki/Companding)
 * Increased analog and digital volume for headphones
 * Dual speaker (main speaker with earpiece)

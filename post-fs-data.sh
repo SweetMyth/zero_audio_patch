@@ -8,4 +8,4 @@ if [ $snd ]; then
 fi }
 # Laster K's tasha codec driver
 # HPH Amplifier Class: 1 - Class AB. 0 - Class H-Hifi.
-snd "low_distort_amp" "0"
+snd "low_distort_amp" "1"
