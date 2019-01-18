@@ -105,6 +105,9 @@ if $BOOTMODE; then
 	mktouch /sbin/.core/img/$MODID/update
 fi
 
+# Permissions
+set_perm_recursive  $MODPATH  0  0  0755  0644
+
 unmount_magisk_img
 
 # Cleanup

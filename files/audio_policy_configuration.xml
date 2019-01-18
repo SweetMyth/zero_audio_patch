@@ -82,15 +82,15 @@
 		</devicePorts>
 		<routes>
 			<!-- Output rotes -->
-			<route type="mux" sink="Earpiece" sources="primary,raw,deep_buffer,compressed_offload,voip_rx"/>
-			<route type="mux" sink="Speaker" sources="primary,raw,deep_buffer,compressed_offload,voip_rx"/>
-			<route type="mux" sink="Wired Headset" sources="primary,raw,deep_buffer,compressed_offload,voip_rx"/>
-			<route type="mux" sink="Wired Headphones" sources="primary,raw,deep_buffer,compressed_offload,voip_rx"/>
-			<route type="mux" sink="Line" sources="primary,raw,deep_buffer,compressed_offload,voip_rx"/>
-			<route type="mux" sink="HDMI" sources="primary,raw,deep_buffer,compressed_offload"/>
-			<route type="mux" sink="Proxy" sources="primary,raw,deep_buffer,compressed_offload"/>
+			<route type="mux" sink="Earpiece" sources="primary,deep_buffer,compressed_offload,voip_rx"/>
+			<route type="mux" sink="Speaker" sources="primary,deep_buffer,compressed_offload,voip_rx"/>
+			<route type="mux" sink="Wired Headset" sources="primary,deep_buffer,compressed_offload,voip_rx"/>
+			<route type="mux" sink="Wired Headphones" sources="primary,deep_buffer,compressed_offload,voip_rx"/>
+			<route type="mux" sink="Line" sources="primary,deep_buffer,compressed_offload,voip_rx"/>
+			<route type="mux" sink="HDMI" sources="primary,deep_buffer,compressed_offload"/>
+			<route type="mux" sink="Proxy" sources="primary,deep_buffer,compressed_offload"/>
 			<route type="mux" sink="FM" sources="primary"/>
-			<route type="mux" sink="BT SCO All" sources="primary,raw,deep_buffer,compressed_offload,voip_rx"/>
+			<route type="mux" sink="BT SCO All" sources="primary,deep_buffer,compressed_offload,voip_rx"/>
 			<route type="mux" sink="Telephony Tx" sources="voice_tx"/>
 			<!-- Direct PCM (Hi-res) exclusive output -->
 			<route type="mux" sink="Earpiece" sources="direct_pcm"/>

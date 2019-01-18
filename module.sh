@@ -5,15 +5,23 @@ device2=z2_row
 device3=
 
 # Disable audio effects in audio flinger
-disable_effects=0
+disable_effects=1
 
 # Amp class for headphones: H_HIFI, AB, AB_HIFI
 hph_amp_class=AB
 
+# Speaker dual enable
+# Have delay between main speaker and earpiece on Pro
+speaker_dual=0
+
 custom_module() {
 # Zero Audio Patch
 	policy=$MODPATH/files/audio_policy_configuration.xml
-	mixer=$MODPATH/files/mixer_paths.xml
+	if [ "$speaker_dual" == "1" ]; then
+		mixer=$MODPATH/files/mixer_paths_dual.xml
+	else
+		mixer=$MODPATH/files/mixer_paths.xml
+	fi
 	ui_print "- Check audio directory"
 	if [ "$hph_amp_class" == "AB_HIFI" ]; then
 		ui_print "- Changing Amp Class to AB HIFI"
@@ -30,13 +38,13 @@ custom_module() {
 		cp $policy $MODPATH/system/vendor/etc/
 	fi
 	if [ -f /system/etc/mixer_paths.xml ]; then
-		cp $mixer $MODPATH/system/etc/
+		cp $mixer $MODPATH/system/etc/mixer_paths.xml
 	fi
 	if [ -f /system/etc/mixer_paths_tasha.xml ]; then
 		cp $mixer $MODPATH/system/etc/mixer_paths_tasha.xml
 	fi
 	if [ -f /system/vendor/etc/mixer_paths.xml ]; then
-		cp $mixer $MODPATH/system/vendor/etc/
+		cp $mixer $MODPATH/system/vendor/etc/mixer_paths.xml
 	fi
 	if [ -f /system/vendor/etc/mixer_paths_tasha.xml ]; then
 		cp $mixer $MODPATH/system/vendor/etc/mixer_paths_tasha.xml
