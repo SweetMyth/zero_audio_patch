@@ -30,7 +30,6 @@ custom_module() {
 	if [ "$hph_amp_class" == "H_HIFI" ]; then
 		ui_print "- Changing Amp Class to H HIFI"
 		sed -i 's/CLS_AB/CLS_H_HIFI/' $mixer
-		sed -i 's/"low_distort_amp" "1"/"low_distort_amp" "0"/' $MODPATH/post-fs-data.sh
 	fi
 	if [ -f /system/etc/audio_policy_configuration.xml ]; then
 		cp $policy $MODPATH/system/etc/
