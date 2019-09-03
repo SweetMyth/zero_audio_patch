@@ -61,7 +61,7 @@ if [ -d /sbin/.core/img/$MODID ]; then
 fi
 
 # Check supported device
-if [ "$device_check" ]; then
+if [ "$device_check" == "1" ]; then
 	device="$(getprop ro.product.device)"
 	for i in $device1 $device2 $device3 $device4 $device5 $device6 $device7 $device8 $device9; do
 		if [ "$device" == "$i" ]; then
