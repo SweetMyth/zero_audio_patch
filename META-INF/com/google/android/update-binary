@@ -1,116 +1,165 @@
 #!/sbin/sh
-# Zero Magisk Module by vlad113
 # Powered by Magisk (@topjohnwu)
+
 Pref="[Magisk Module]"
-TEMP=/dev/tmp
-INSTALL=$TEMP/install
-MOUNTPATH=$TEMP/magisk_img
+TMP=/dev/tmp
+MP=/dev/magisk_img
 OUTFD=$2
 ZIP=$3
 
-# Permissions 644
+# Default permissions 644
 umask 022
 
-# Cleanup temp folder
-rm -rf $TEMP 2>/dev/null
-mkdir -p $INSTALL
+# Initial cleanup
+rm -rf $TMP 2>/dev/null
+mkdir -p $TMP
 
-# Magisk API
+# Echo before loading util_functions
 ui_print() { echo "$1"; }
 
+imgless() {
+	[ $MAGISK_VER_CODE -gt 18100 ]
+	return $?
+}
+
 mount /data 2>/dev/null
-util=magisk/util_functions.sh
-if [ -f /data/adb/$util ]; then
-	. /data/adb/$util
-elif [ -f /data/$util ]; then
-	NVBASE=/data
-	. /data/$util
+
+# Load utility functions
+util=/data/adb/magisk/util_functions.sh
+if [ -f $util ]; then
+	. $util
+	NVBASE=/data/adb
 else
 	ui_print "$Pref - Install/Update Magisk!"
 	exit 1
 fi
 
-# if device booted using another img
-$BOOTMODE && IMG=$NVBASE/magisk_merge.img
-
+# Preparation for flashable zips
 setup_flashable
+
+# Mount partitions
 mount_partitions
+
+# Detect version and architecture
 api_level_arch_detect
 
-# busybox initializing
+# Setup busybox and binaries
 $BOOTMODE && boot_actions || recovery_actions
 
-# Install
-unzip -o "$ZIP" module.prop module.sh -d $INSTALL >&2
+# Extract configs
+unzip -oj "$ZIP" module.prop user_config.txt 'custom/*' -d $TMP >&2
 
-. $INSTALL/module.sh
-MODID=`grep_prop id $INSTALL/module.prop`
-MODNAME=`grep_prop name $INSTALL/module.prop`
-MODVER=`grep_prop version $INSTALL/module.prop`
-MODAUTH=`grep_prop author $INSTALL/module.prop`
-MODPATH=$MOUNTPATH/$MODID
-
-# Remove module if already installed
-# !Not work in TWRP
-if [ -d /sbin/.core/img/$MODID ]; then
-	ui_print "$Pref - $MODNAME is already installed"
-	ui_print "- Module removing"
-	rm -rf /sbin/.core/img/$MODID 2>/dev/null
-	ui_print "- $MODNAME now is deleted"
-	exit 0
+if imgless; then
+	$BOOTMODE && MODDIRNAME=modules_update || MODDIRNAME=modules
+	MODULEROOT=$NVBASE/$MODDIRNAME
+else
+	$BOOTMODE && IMGNAME=magisk_merge.img || IMGNAME=magisk.img
+	IMG=$NVBASE/$IMGNAME
+	request_zip_size_check "$ZIP"
+	mount_magisk_img
+	MODULEROOT=$MOUNTPATH
 fi
 
-# Check supported device
-if [ "$device_check" == "1" ]; then
-	device="$(getprop ro.product.device)"
-	for i in $device1 $device2 $device3 $device4 $device5 $device6 $device7 $device8 $device9; do
-		if [ "$device" == "$i" ]; then
-			supported=1
-			break
-		fi
-	done
-	if [ ! "$supported" ]; then
-		ui_print "$Pref - $device is not supported!"
-		exit 1
+. $TMP/user_config.txt
+. $TMP/module.sh
+MODID=`grep_prop id $TMP/module.prop`
+MODNAME=`grep_prop name $TMP/module.prop`
+MODVER=`grep_prop version $TMP/module.prop`
+MODAUTH=`grep_prop author $TMP/module.prop`
+MODPATH=$MODULEROOT/$MODID
+
+# Module control
+if imgless; then
+	IMOD=$NVBASE/modules/$MODID
+	IMODU=$NVBASE/modules_update/$MODID
+else
+	IMOD=/sbin/.magisk/img/$MODID
+fi
+
+if [ -d $IMOD ]; then
+	IMODNAME=`grep_prop name $IMOD/module.prop`
+	IMODVER=`grep_prop version $IMOD/module.prop`
+	if [ "$MODVER" != "$IMODVER" ]; then
+		ui_print "$Pref - $IMODNAME $IMODVER version is different"
+		ui_print "- Updating to $MODNAME $MODVER"
+		rm -rf $IMOD 2>/dev/null
+		rm -rf $IMODU 2>/dev/null
+		ui_print ""
+	else
+		ui_print "$Pref - $MODNAME $IMODVER is exist!"
+		ui_print "- Uninstalling"
+		rm -rf $IMOD 2>/dev/null
+		rm -rf $IMODU 2>/dev/null
+		cd /
+		imgless || unmount_magisk_img
+		$BOOTMODE || recovery_cleanup
+		rm -rf $TMP $MOUNTPATH
+		ui_print "- Done"
+		exit 0
 	fi
 fi
 
-# Module name
+# Check supported device/board
+if [ -n "$device_check" ]; then
+	device="$(getprop ro.build.product)"
+	for i in $device_list; do
+		if [ "$i" == "$device" ]; then
+			supported=1
+			ui_print "- $i"
+			break
+		fi
+	done
+fi
+
+if [ -n "$board_check" ]; then
+	board="$(getprop ro.product.board)"
+	for i in $board_list; do
+		if [ "$i" == "$board" ]; then
+			supported=1
+			ui_print "- $i"
+			break
+		fi
+	done
+fi
+
+if [ -z "$supported" ]; then
+	ui_print "$Pref - $device $board is not supported!"
+	exit 1
+fi
+
+# Module info
 ui_print "$Pref - $MODNAME"
 ui_print "Version - $MODVER"
 ui_print "Author - $MODAUTH"
 ui_print "Powered by Magisk (@topjohnwu)"
 
-# Size check
-request_zip_size_check "$ZIP"
-mount_magisk_img
-
-# Cleanup mod folder
+# Cleanup module folder
 rm -rf $MODPATH 2>/dev/null
 mkdir -p $MODPATH
 
 # Extract files
 ui_print "- Extracting files"
-unzip -o "$ZIP" -d $MODPATH >&2
-rm -rf $MODPATH/META-INF
-rm -rf $MODPATH/module.sh
+unzip -o "$ZIP" module.prop 'files/*' 'system/*' -d $MODPATH >&2
 
-# Custom module in module.sh
-custom_module
+# Custom installer from custom/module.sh
+custom_installer
 
 touch $MODPATH/auto_mount
 
-# if booted update info in Magisk Manager
+# Module info in Magisk Manager
 if $BOOTMODE; then
-	mktouch /sbin/.core/img/$MODID/update
+	mktouch $IMOD/update
+	cp -af $TMP/module.prop $IMOD/module.prop
 fi
 
 # Permissions
-set_perm_recursive  $MODPATH  0  0  0755  0644
+ui_print "- Setting permissions"
+set_perm_recursive $MODPATH 0 0 0755 0644
 
-unmount_magisk_img
-
-# Cleanup
+# Final
+cd /
+imgless || unmount_magisk_img
 $BOOTMODE || recovery_cleanup
-rm -rf $TEMP
+rm -rf $TMP $MOUNTPATH
+ui_print "- Done"
 exit 0

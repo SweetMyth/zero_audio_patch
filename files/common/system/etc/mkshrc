@@ -26,8 +26,13 @@ done
 
 unset p
 
-# Zero Audio Patch
-# Can make logs if type in terminal - audio_logs
-alias audio_logs="mkdir sdcard/zap; tinymix > sdcard/zap/tinymix.txt; dumpsys media.audio_flinger > sdcard/zap/audio_flinger.txt; dumpsys media.audio_policy > sdcard/zap/audio_policy.txt"
+# Scripts
+imgless=/data/adb/modules/zap/scripts.sh
+img=/sbin/.magisk/img/zap/scripts.sh
+if [ -f $imgless ]; then
+	. $imgless 2>/dev/null
+else
+	. $img 2>/dev/null
+fi
 
 : place customizations above this line

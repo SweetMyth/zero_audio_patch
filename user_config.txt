@@ -1,0 +1,6 @@
+# Custom options for Zero Audio Patch
+
+# Disables audio effects in audio flinger
+# - If you want to use equalizers (Stock, V4FX, Dolby, etc...) you need to turn option off (Equalizer included in players should be ok)
+# Def - 1 (On)
+disable_effects=1

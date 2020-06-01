@@ -1,0 +1,10 @@
+audio.safemedia.bypass=true
+ro.config.media_vol_steps=50
+ro.config.vc_call_vol_steps=50
+
+ro.vendor.audio.sdk.fluencetype=none
+persist.vendor.audio.fluence.voicecall=false
+persist.vendor.audio.fluence.voicerec=false
+persist.vendor.audio.fluence.voicecomm=false
+persist.vendor.audio.fluence.audiorec=false
+persist.vendor.audio.fluence.speaker=false

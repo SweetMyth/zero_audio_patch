@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Zero Audio Patch by SweetMyth -->
+<volumes>
+	<reference name="CUSTOM_VOLUME_CURVE">
+		<point>0,-75400</point>
+		<point>1,-6000</point>
+		<point>10,-4505</point>
+		<point>20,-3271</point>
+		<point>30,-2275</point>
+		<point>40,-1496</point>
+		<point>50,-911</point>
+		<point>60,-497</point>
+		<point>70,-227</point>
+		<point>80,-75</point>
+		<point>90,-11</point>
+		<point>100,0</point>
+	</reference>
+	<volume stream="AUDIO_STREAM_VOICE_CALL" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_VOICE_CALL" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_VOICE_CALL" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_SYSTEM" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_SYSTEM" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_SYSTEM" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_RING" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_RING" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_RING" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_NOTIFICATION" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_NOTIFICATION" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_NOTIFICATION" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_BLUETOOTH_SCO" deviceCategory="DEVICE_CATEGORY_HEADSET" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_BLUETOOTH_SCO" deviceCategory="DEVICE_CATEGORY_SPEAKER" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_BLUETOOTH_SCO" deviceCategory="DEVICE_CATEGORY_EARPIECE" ref="CUSTOM_VOLUME_CURVE"/>
+	<!-- Test -->
+	<volume stream="AUDIO_STREAM_VOICE_CALL" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_SYSTEM" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_RING" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_MUSIC" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_ALARM" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_NOTIFICATION" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+	<volume stream="AUDIO_STREAM_BLUETOOTH_SCO" deviceCategory="DEVICE_CATEGORY_EXT_MEDIA" ref="CUSTOM_VOLUME_CURVE"/>
+</volumes>
