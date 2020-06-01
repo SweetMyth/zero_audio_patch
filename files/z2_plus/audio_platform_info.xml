@@ -7,7 +7,6 @@
 	</acdb_ids>
 	<config_params>
 		<param key="hd_voice" value="true"/>
-		<param key="volume_boost" value="on"/>
 		<param key="spkr_1_tz_name" value="wsatz.11"/>
 		<param key="spkr_2_tz_name" value="wsatz.12"/>
 		<!-- In the below value string, first parameter indicates size -->
