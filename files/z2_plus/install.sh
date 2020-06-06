@@ -1,3 +1,7 @@
+mixer=$device_folder/mixer_paths.xml
+
+mv $MODPATH/files/msm8996/* $device_folder/
+
 if [ -f /system/vendor/etc/fstab.qcom ]; then
 	fstab=/system/vendor/etc/fstab.qcom
 else
@@ -14,8 +18,8 @@ else
 	mv $device_folder/non-treble/* $device_folder/
 fi
 
-[ -f /system/etc/mixer_paths_tasha.xml ] && ( mv $device_folder/mixer_paths.xml $device_folder/mixer_paths_tasha.xml )
-[ -f /system/vendor/etc/mixer_paths_tasha.xml ] && ( mv $device_folder/mixer_paths.xml $device_folder/mixer_paths_tasha.xml )
+[ -f /system/etc/mixer_paths_tasha.xml ] && ( mixer=$device_folder/mixer_paths_tasha.xml; mv $device_folder/mixer_paths.xml $mixer )
+[ -f /system/vendor/etc/mixer_paths_tasha.xml ] && ( mixer=$device_folder/mixer_paths_tasha.xml; mv $device_folder/mixer_paths.xml $mixer )
 
 rm -rf $device_folder/treble
 rm -rf $device_folder/non-treble

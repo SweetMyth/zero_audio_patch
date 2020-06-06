@@ -1,3 +1,5 @@
+mv $MODPATH/files/msm8996/* $device_folder/
+
 if [ -f /system/vendor/etc/fstab.qcom ]; then
 	fstab=/system/vendor/etc/fstab.qcom
 else

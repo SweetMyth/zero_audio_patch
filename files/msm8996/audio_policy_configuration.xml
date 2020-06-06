@@ -143,7 +143,7 @@
 				<route type="mux" sink="Earpiece"
 					sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
 				<route type="mux" sink="Speaker"
-					sources="deep_buffer"/>
+					sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
 				<route type="mux" sink="Wired Headset"
 					sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
 				<route type="mux" sink="Wired Headphones"
@@ -256,7 +256,6 @@
 	<!-- Volume section -->
 	<!-- Custom policy -->
 	<xi:include href="/vendor/etc/custom_policy_volumes.xml"/>
-	<xi:include href="custom_policy_volumes.xml"/>
 	<!-- Default policy -->
 	<xi:include href="/vendor/etc/audio_policy_volumes.xml"/>
 	<xi:include href="audio_policy_volumes.xml"/>
