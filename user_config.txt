@@ -4,3 +4,14 @@
 # - If you want to use equalizers (Stock, V4FX, Dolby, etc...) you need to turn option off (Equalizer included in players should be ok)
 # Def - 1 (On)
 disable_effects=1
+
+# Dual speaker option
+# - It enables earpiece (in-call speaker) as secondary speaker for stereo experience - bottom speaker & upper speaker (WARNING: it gives so small impact in stereo experience, because earpiece is not meant to be powerfull)
+# Def - 0 (Off)
+dual_speaker=0
+
+# Hack: Phone's mic instead of Headset mic
+# - If you have issues with mic like, mic doesn't work while you plug headphones/headset then you should enable this
+# Tip: Headset is headphones but with external mic and buttons
+# Def - 0 (Off)
+phone_mic=0

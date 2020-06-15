@@ -17,7 +17,7 @@ custom_installer() {
 	[ ! -f "$device_folder" ] && ( device_folder=$MODPATH/files/$board )
 
 	# Enabling effects
-	if [ -z "$disable_effects" ]; then
+	if [ "$disable_effects" -lt "1" ]; then
 		ui_print "- Keep audio effects enabled"
 		rm -f $common/system/etc/audio_effects.conf
 		rm -f $common/system/vendor/etc/audio_effects.xml
@@ -26,9 +26,7 @@ custom_installer() {
 	fi
 
 	# Check adsp policy dir
-	if [ -f /system/vendor/etc/audio_io_policy.conf ]; then
-		mv $common/system/vendor/etc/audio_output_policy.conf $common/system/vendor/etc/audio_io_policy.conf
-	fi
+	[ -f /system/vendor/etc/audio_io_policy.conf ] && ( mv $common/system/vendor/etc/audio_output_policy.conf $common/system/vendor/etc/audio_io_policy.conf )
 
 	# Move common files to module folder
 	mv $common/* $MODPATH/
@@ -37,7 +35,25 @@ custom_installer() {
 	ui_print "- Installing device configs"
 
 	# Additional scripts for device
-	[ -f $device_folder/install.sh ] && ( . $device_folder/install.sh )
+	if [ -f $device_folder/install.sh ]; then
+		. $device_folder/install.sh
+	fi
+
+	# Dual speaker
+	if [ "$dual_speaker" -gt "0" ]; then
+		ui_print "- Dual speaker option"
+		sed -i 's/IS_DUAL_SPEAKER/speaker-dual/' $mixer
+	else
+		sed -i 's/IS_DUAL_SPEAKER/speaker-mono/' $mixer
+	fi
+
+	# Phone's mic instead of Headset mic
+	if [ "$phone_mic" -gt "0" ]; then
+		ui_print "- Using phone's mic instead of headset mic"
+		sed -i 's/IS_PHONE_MIC/bottom-mic/' $mixer
+	else
+		sed -i 's/IS_PHONE_MIC/external-mic/' $mixer
+	fi
 
 	# Copy files to right dir
 	[ -f /system/etc/audio_policy_configuration.xml ] && ( cp $device_folder/* $MODPATH/system/etc/ )

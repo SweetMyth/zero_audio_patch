@@ -4,8 +4,8 @@
 	<!-- headphones -->
 	<ctl name="RX1 Mix Digital Volume" value="84"/>
 	<ctl name="RX2 Mix Digital Volume" value="84"/>
-	<ctl name="RX HPH Mode" value="CLS_H_HIFI"/>
-	<ctl name="HiFi Function" value="On"/>
+	<ctl name="RX HPH Mode" value="CLS_AB"/>
+	<ctl name="HiFi Function" value="Off"/>
 	<ctl name="HPHL Volume" value="20"/>
 	<ctl name="HPHR Volume" value="20"/>
 	<ctl name="COMP1 Switch" value="0"/>
@@ -1737,7 +1737,7 @@
 	</path>
 
 	<path name="speaker">
-		<path name="speaker-mono"/>
+		<path name="IS_DUAL_SPEAKER"/>
 	</path>
 
    <path name="speaker-vbat-mono">
@@ -1991,7 +1991,7 @@
 	</path>
 
 	<path name="headset-mic">
-		<path name="external-mic"/>
+		<path name="IS_PHONE_MIC"/>
 	</path>
 
 	<path name="voice-headset-mic">
