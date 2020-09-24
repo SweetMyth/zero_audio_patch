@@ -2,9 +2,12 @@
 <!-- Zero Audio Patch by SweetMyth -->
 <audio_platform_info>
 	<acdb_ids>
-		<device name="SND_DEVICE_OUT_SPEAKER" acdb_id="15"/>
+		<device name="SND_DEVICE_OUT_SPEAKER" acdb_id="14"/>
 		<device name="SND_DEVICE_OUT_SPEAKER_PROTECTED" acdb_id="124"/>
 	</acdb_ids>
+	<bit_width_configs>
+		<device name="SND_DEVICE_OUT_SPEAKER" bit_width="24"/>
+	</bit_width_configs>
 	<config_params>
 		<param key="hd_voice" value="true"/>
 		<param key="spkr_1_tz_name" value="wsatz.11"/>

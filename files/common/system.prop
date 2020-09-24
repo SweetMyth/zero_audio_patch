@@ -11,3 +11,5 @@ persist.vendor.audio.fluence.speaker=false
 
 af.resampler.quality=7
 af.thread.throttle=0
+
+persist.vendor.audio.speaker.prot.enable=true

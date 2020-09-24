@@ -35,8 +35,8 @@
 				</mixPort>
 				<mixPort name="deep_buffer" role="source" flags="AUDIO_OUTPUT_FLAG_DEEP_BUFFER">
 					<profile name=""
-						format="AUDIO_FORMAT_PCM_24_BIT_PACKED"
-						samplingRates="96000"
+						format="AUDIO_FORMAT_PCM_FLOAT"
+						samplingRates="44100"
 						channelMasks="AUDIO_CHANNEL_OUT_STEREO"
 					/>
 				</mixPort>
@@ -86,7 +86,7 @@
 				<!-- Input -->
 				<mixPort name="primary input" role="sink">
 					<profile name=""
-						format="AUDIO_FORMAT_PCM_24_BIT_PACKED"
+						format="AUDIO_FORMAT_PCM_16_BIT"
 						samplingRates="8000,11025,12000,16000,22050,24000,32000,44100"
 						channelMasks="AUDIO_CHANNEL_IN_MONO,AUDIO_CHANNEL_IN_STEREO,AUDIO_CHANNEL_IN_FRONT_BACK"
 					/>
@@ -166,7 +166,7 @@
 					sources="voice_tx"/>
 				<!-- Input -->
 				<route type="mux" sink="primary input"
-					sources="Wired Headset Mic,BT SCO Headset Mic,FM Tuner,Telephony Rx"/>
+					sources="Built-In Mic,Built-In Back Mic,Wired Headset Mic,BT SCO Headset Mic,FM Tuner,Telephony Rx"/>
 				<route type="mux" sink="record_24"
 					sources="Built-In Mic,Built-In Back Mic,Wired Headset Mic"/>
 				<route type="mux" sink="voice_rx"

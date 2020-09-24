@@ -5,7 +5,7 @@
 	<ctl name="RX1 Mix Digital Volume" value="84"/>
 	<ctl name="RX2 Mix Digital Volume" value="84"/>
 	<ctl name="RX HPH Mode" value="CLS_AB"/>
-	<ctl name="HiFi Function" value="Off"/>
+	<ctl name="HiFi Function" value="On"/>
 	<ctl name="HPHL Volume" value="20"/>
 	<ctl name="HPHR Volume" value="20"/>
 	<ctl name="COMP1 Switch" value="0"/>
@@ -14,7 +14,7 @@
 	<!-- speaker -->
 	<ctl name="RX7 Digital Volume" value="87"/>
 	<ctl name="SpkrLeft COMP Switch" value="0"/>
-	<ctl name="COMP7 Switch" value="0"/>
+	<ctl name="COMP7 Switch" value="1"/>
 
 	<!-- earpiece -->
 	<ctl name="RX0 Mix Digital Volume" value="87"/>
@@ -1723,6 +1723,8 @@
 		<ctl name="SpkrLeft BOOST Switch" value="1"/>
 		<ctl name="SpkrLeft VISENSE Switch" value="1"/>
 		<ctl name="SpkrLeft SWR DAC_Port Switch" value="1"/>
+		<ctl name="VI_FEED_TX Channels" value="One"/>
+		<ctl name="SLIM0_RX_VI_FB_LCH_MUX" value="SLIM4_TX"/>
 	</path>
 
 	<path name="speaker-dual">
@@ -1734,6 +1736,9 @@
 		<ctl name="SpkrLeft BOOST Switch" value="1"/>
 		<ctl name="SpkrLeft VISENSE Switch" value="1"/>
 		<ctl name="SpkrLeft SWR DAC_Port Switch" value="1"/>
+		<ctl name="VI_FEED_TX Channels" value="Two"/>
+		<ctl name="SLIM0_RX_VI_FB_LCH_MUX" value="SLIM4_TX"/>
+		<ctl name="SLIM0_RX_VI_FB_RCH_MUX" value="SLIM4_TX"/>
 	</path>
 
 	<path name="speaker">
@@ -1775,8 +1780,6 @@
 		<path name="speaker"/>
 		<ctl name="AIF4_VI Mixer SPKR_VI_1" value="1"/>
 		<ctl name="SLIM_4_TX Format" value="PACKED_16B"/>
-		<ctl name="VI_FEED_TX Channels" value="One"/>
-		<ctl name="SLIM0_RX_VI_FB_LCH_MUX" value="SLIM4_TX"/>
 	</path>
 
 	<path name="voice-speaker-protected">

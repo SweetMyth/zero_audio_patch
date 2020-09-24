@@ -16,14 +16,26 @@ custom_installer() {
 	# Experimental! Use board folder if device not supported
 	[ ! -f "$device_folder" ] && ( device_folder=$MODPATH/files/$board )
 
-	# Enabling effects
-	if [ "$disable_effects" -lt "1" ]; then
+	# Audio effects
+	case "$disable_effects" in
+	"0" )
+		ui_print "- Disabling audio effects"
+		rm -f $common/system/etc/audio_effects_eq.conf
+		rm -f $common/system/vendor/etc/audio_effects_eq.xml
+	;;
+	"1" )
 		ui_print "- Keep audio effects enabled"
 		rm -f $common/system/etc/audio_effects.conf
 		rm -f $common/system/vendor/etc/audio_effects.xml
-	else
-		ui_print "- Disabling audio effects"
-	fi
+		rm -f $common/system/etc/audio_effects_eq.conf
+		rm -f $common/system/vendor/etc/audio_effects_eq.xml
+	;;
+	"2" )
+		ui_print "- Tweaking audio effects"
+		mv $common/system/etc/audio_effects_eq.conf $common/system/etc/audio_effects.conf
+		mv $common/system/vendor/etc/audio_effects_eq.xml $common/system/vendor/etc/audio_effects.xml
+	;;
+	esac
 
 	# Check adsp policy dir
 	[ -f /system/vendor/etc/audio_io_policy.conf ] && ( mv $common/system/vendor/etc/audio_output_policy.conf $common/system/vendor/etc/audio_io_policy.conf )

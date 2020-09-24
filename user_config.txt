@@ -1,8 +1,12 @@
 # Custom options for Zero Audio Patch
 
-# Disables audio effects in audio flinger
-# - If you want to use equalizers (Stock, V4FX, Dolby, etc...) you need to turn option off (Equalizer included in players should be ok)
+# Disables/Tweaks stock/modified audio effects in audio flinger
+# - If you want to use equalizers and stock effects (Stock, Dolby, V4A FX, JamesDSP and etc... ) set option to "0" (Equalizer included in players should be ok)
+# - If you don't want to use any audio effects, equalizers and like 'bit perfect' audio, set option to "1" (Default)
+# - If you don't want to use stock effects but want to use equalizers such as - V4A FX, JamesDSP, (Moto Dolby, Dolby Dirac which is already included in ROM) set option to "2"
+# - 0 (Off)
 # Def - 1 (On)
+# - 2 (Custom)
 disable_effects=1
 
 # Dual speaker option

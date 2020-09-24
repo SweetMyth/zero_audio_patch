@@ -100,7 +100,7 @@ if [ -d $IMOD ]; then
 fi
 
 # Check supported device/board
-if [ -n "$device_check" ]; then
+if [ "$device_check" -gt "0" ]; then
 	device="$(getprop ro.build.product)"
 	for i in $device_list; do
 		if [ "$i" == "$device" ]; then
@@ -111,7 +111,7 @@ if [ -n "$device_check" ]; then
 	done
 fi
 
-if [ -n "$board_check" ]; then
+if [ "$board_check" -gt "0" ]; then
 	board="$(getprop ro.product.board)"
 	for i in $board_list; do
 		if [ "$i" == "$board" ]; then
@@ -122,9 +122,11 @@ if [ -n "$board_check" ]; then
 	done
 fi
 
-if [ -z "$supported" ]; then
-	ui_print "$Pref - $device $board is not supported!"
-	exit 1
+if [ "$device_check" -gt "0" ] || [ "$board_check" -gt "0" ]; then
+	if [ -z "$supported" ]; then
+		ui_print "$Pref - $device $board is not supported!"
+		exit 1
+	fi
 fi
 
 # Module info
